@@ -29,7 +29,6 @@ const RegisterForm = () => {
             ...prevState,
             [target.name]: target.value
         }));
-        console.log("targ", target);
     };
     const validatorConfig = {
         email: {
@@ -83,7 +82,6 @@ const RegisterForm = () => {
         if (!isValid) return;
         console.log(data);
     };
-    console.log("regist", data);
     return (
         <form onSubmit={handleSubmit}>
             <TextField

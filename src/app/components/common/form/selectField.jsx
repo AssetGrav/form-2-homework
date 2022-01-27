@@ -16,15 +16,19 @@ const SelectField = ({
     const getInputClasses = () => {
         return "form-select" + (error ? " is-invalid" : "");
     };
-
+    const valueToString = (value) => {
+        const stringValue = typeof value !== "string" && typeof value === "object"
+            ? value._id
+            : value;
+        return stringValue;
+    };
     const optionsArray =
         !Array.isArray(options) && typeof options === "object"
             ? Object.keys(options).map((optionName) => ({
-                  name: options[optionName].name,
-                  value: options[optionName]._id
-              }))
+                name: options[optionName].name,
+                value: options[optionName]._id
+            }))
             : options;
-
     return (
         <div className="mb-4">
             <label htmlFor={name} className="form-label">
@@ -34,7 +38,7 @@ const SelectField = ({
                 className={getInputClasses()}
                 id={name}
                 name={name}
-                value={value}
+                value={valueToString(value)}
                 onChange={handleChange}
             >
                 <option disabled value="">
@@ -55,7 +59,7 @@ const SelectField = ({
 SelectField.propTypes = {
     defaultOption: PropTypes.string,
     label: PropTypes.string,
-    value: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
     onChange: PropTypes.func,
     error: PropTypes.string,
     options: PropTypes.oneOfType([PropTypes.object, PropTypes.array]),

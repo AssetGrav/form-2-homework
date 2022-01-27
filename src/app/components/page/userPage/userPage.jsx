@@ -14,16 +14,19 @@ const UserPage = ({ userId }) => {
     const handleClick = () => {
         history.push(`/users/${userId}/editPage`);
     };
+    const local = JSON.parse(localStorage.getItem("users")).filter((obj) => userId === obj._id);
+    console.log("user", local[0]);
     if (user) {
         return (
             <Switch>
-                <Route path="/users/:userId/editPage" component={EditPage} />
+                <Route path="/users/:userId/editPage"
+                    render={() => <EditPage user={user} />} />
                 <Route path="/users/:userId" exact
                     render={() =>
                     <div>
-                        <h1> {user.name}</h1>
-                        <h2>Профессия: {user.profession.name}</h2>
-                        <Qualities qualities={user.qualities} />
+                        <h1> {local[0].name}</h1>
+                        <h2>Профессия: {local[0].profession.name}</h2>
+                        <Qualities qualities={local[0].qualities} />
                         <p>completedMeetings: {user.completedMeetings}</p>
                         <h2>Rate: {user.rate}</h2>
                         <button onClick={handleClick}>Изменить</button>
